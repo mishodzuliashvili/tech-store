@@ -10,6 +10,7 @@ export default async function getProductsInCategory(
     Prisma.ProductGetPayload<{
       include: {
         attributes: true;
+        images: true;
       };
     }>[]
   >
@@ -49,6 +50,7 @@ export default async function getProductsInCategory(
       },
       include: {
         attributes: true,
+        images: true,
       },
     });
 
