@@ -2,7 +2,7 @@ type SearchBoxProps = {};
 
 export default function SearchBox({}: SearchBoxProps) {
   return (
-    <form className="w-[300px] relative">
+    <form className="w-[80%] relative">
       <div className="relative w-full">
         <input
           type="search"
