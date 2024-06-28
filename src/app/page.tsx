@@ -24,9 +24,8 @@ export default async function Home() {
 
   return (
     <main className="container">
-      json
       {/* <h1 className="text-lg font-bold mb-2">კატეგორია</h1> */}
-      {/* <NavigationMenuDemo categoryTree={categoryTree as any} /> */}
+      <NavigationMenuDemo categoryTree={threeLevelCategoryTreeResponse.data} />
       {/* in json format */}
       <pre>{JSON.stringify(threeLevelCategoryTreeResponse.data, null, 2)}</pre>
       {/* <LoginWithGoogleButton>Login with Google</LoginWithGoogleButton> */}
