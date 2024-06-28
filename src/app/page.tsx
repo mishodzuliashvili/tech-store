@@ -1,21 +1,35 @@
-import getCurrentUser from "@/actions/user/current/get";
-import { Button } from "@/components/ui/button";
-import LoginWithGoogleButton from "@/components/ui/login-with-google-button";
-import Image from "next/image";
-import {
-  RegisterLink,
-  LoginLink,
-} from "@kinde-oss/kinde-auth-nextjs/components";
+import getCurrentUser from "@/actions/users/get-current-user";
+import { NavigationMenuDemo } from "./NavigationMenuDemo";
 import LogoutButton from "@/components/ui/logout-button";
+import getThreeLevelCategoryTree from "@/actions/categories/get-three-level-category-tree";
 
 export default async function Home() {
-  const user = await getCurrentUser();
+  const response = await getCurrentUser();
+
+  if (response.success) {
+    return (
+      <main className="container">
+        <h3>{response.data.givenName}</h3>
+        <LogoutButton variant="secondary">Logout</LogoutButton>
+      </main>
+    );
+  }
+
+  // maybe get root categories and show them here
+  const threeLevelCategoryTreeResponse = await getThreeLevelCategoryTree();
+
+  if (!threeLevelCategoryTreeResponse.success) {
+    return <main className="container">Categories not found</main>;
+  }
 
   return (
     <main className="container">
-      <h3>{user?.givenName}</h3>
-      <LoginWithGoogleButton>Loign with Google</LoginWithGoogleButton>
-      <LogoutButton variant="secondary">Logout</LogoutButton>
+      json
+      {/* <h1 className="text-lg font-bold mb-2">კატეგორია</h1> */}
+      {/* <NavigationMenuDemo categoryTree={categoryTree as any} /> */}
+      {/* in json format */}
+      <pre>{JSON.stringify(threeLevelCategoryTreeResponse.data, null, 2)}</pre>
+      {/* <LoginWithGoogleButton>Login with Google</LoginWithGoogleButton> */}
     </main>
   );
 }
