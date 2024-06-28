@@ -14,3 +14,46 @@ model User {
   givenName  String
   familyName String
 }
+
+model Category {
+  id               Int        @id @default(autoincrement())
+  name             String
+  parentCategory   Category?  @relation("CategoryHierarchy", fields: [parentCategoryId], references: [id])
+  parentCategoryId Int?
+  subcategories    Category[] @relation("CategoryHierarchy")
+  Product          Product[]
+}
+
+model Image {
+  id        Int     @id @default(autoincrement())
+  url       String
+  Product   Product @relation(fields: [productId], references: [id])
+  productId Int
+}
+
+model Product {
+  id         Int      @id @default(autoincrement())
+  // here i mean leaf category
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+
+  title       String
+  price       Float
+  discount    Float // This field represents the discount percentage (e.g., 20 for 20% off)
+  stock       Int
+  description String
+  images      Image[]
+  isActive    Boolean
+
+  attributes ProductAttributes[]
+}
+
+model ProductAttributes {
+  id        Int     @id @default(autoincrement())
+  name      String
+  // ogond unde shevzgudot rom ori ertidaigve attributi romelimes orjer ar hqondes
+  // sheidzleb primary key davadot magalitad id + name
+  value     String
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+}
