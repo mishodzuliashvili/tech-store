@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { cn } from "@/lib/utils";
 import COMPANY from "@/constants/company";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import FONT from "@/constants/font";
 import Providers from "./providers";
+import { cn } from "@/utils/cn";
 
 export const metadata: Metadata = {
   title: COMPANY.title,
