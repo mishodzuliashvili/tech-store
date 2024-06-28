@@ -33,7 +33,6 @@ model Image {
 
 model Product {
   id         Int      @id @default(autoincrement())
-  // here i mean leaf category
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId Int
 
@@ -43,17 +42,17 @@ model Product {
   stock       Int
   description String
   images      Image[]
-  isActive    Boolean
+  isActive    Boolean @default(true)
 
-  attributes ProductAttributes[]
+  attributes ProductAttribute[]
 }
 
-model ProductAttributes {
+model ProductAttribute {
   id        Int     @id @default(autoincrement())
   name      String
-  // ogond unde shevzgudot rom ori ertidaigve attributi romelimes orjer ar hqondes
-  // sheidzleb primary key davadot magalitad id + name
   value     String
   product   Product @relation(fields: [productId], references: [id])
   productId Int
+
+  @@unique([productId, name])
 }
