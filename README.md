@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 npx prisma migrate dev --name init
 
-turso db shell turso-prisma-db < ./prisma/migrations/20230922132717_init/migration.sql
+turso db shell tech-store-db < ./prisma/migrations/20230922132717_init/migration.sql
 
 ## Getting Started
 
