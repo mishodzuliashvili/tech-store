@@ -1,10 +1,10 @@
 import db from "@/lib/db";
 import getAllSubtreeCategoryIds from "../categories/get-all-subtree-category-ids";
-import { ProductAttributes } from "@prisma/client";
+import { ProductAttribute } from "@prisma/client";
 
 export async function getAllAttributesAndNumberOfProductsInCategory(
   categoryId: number
-): Promise<ServiceResponse<[ProductAttributes[], number]>> {
+): Promise<ServiceResponse<[ProductAttribute[], number]>> {
   try {
     const allSubtreeCategoryIdsResponse = await getAllSubtreeCategoryIds(
       categoryId
