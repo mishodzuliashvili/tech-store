@@ -7,10 +7,10 @@ export default function Navbar({}: NavbarProps) {
   return (
     <header className="flex flex-wrap w-full bg-white text-sm py-4">
       <div className="container">
-        <nav className="w-full sm:flex sm:items-center sm:justify-between gap-5">
+        <nav className="w-full sm:flex sm:items-center gap-5">
           <div className="flex items-center justify-between">
             <a
-              className="inline-flex items-center gap-x-2 text-xl font-semibold"
+              className="inline-flex w-[240px] items-center gap-x-2 text-xl font-semibold"
               href="#"
             >
               <div className="rounded bg-primary h-[40px] w-[40px] flex items-center justify-center text-white">
@@ -19,7 +19,7 @@ export default function Navbar({}: NavbarProps) {
               <span className="whitespace-nowrap">{COMPANY.title}</span>
             </a>
           </div>
-          <div>
+          <div className="w-full">
             <SearchBox />
           </div>
           <div className="hidden overflow-hidden transition-all duration-300 sm:block">
