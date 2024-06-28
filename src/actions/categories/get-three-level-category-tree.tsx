@@ -7,11 +7,7 @@ export default async function getThreeLevelCategoryTree(): Promise<
       include: {
         subcategories: {
           include: {
-            subcategories: {
-              include: {
-                subcategories: true;
-              };
-            };
+            subcategories: true;
           };
         };
       };
@@ -26,11 +22,7 @@ export default async function getThreeLevelCategoryTree(): Promise<
       include: {
         subcategories: {
           include: {
-            subcategories: {
-              include: {
-                subcategories: true,
-              },
-            },
+            subcategories: true,
           },
         },
       },
