@@ -6,7 +6,7 @@ import Footer from "@/components/footer";
 import FONT from "@/constants/font";
 import Providers from "./providers";
 import { cn } from "@/utils/cn";
-
+import { Toaster } from "react-hot-toast";
 export const metadata: Metadata = {
   title: COMPANY.title,
   description: COMPANY.description,
@@ -29,6 +29,7 @@ export default function RootLayout({
           <Navbar />
           <main>{children}</main>
           <Footer />
+          <Toaster />
         </body>
       </Providers>
     </html>
