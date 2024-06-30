@@ -17,12 +17,20 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Checkbox } from "@/components/ui/checkbox";
-import Filters from "./filters";
 import getCategory from "@/actions/categories/get-category";
 import getPathToRootByCategoryId from "@/actions/categories/get-path-to-root";
 import { getFiltersOfCategory } from "@/actions/filters/get-filters-in-category";
 import getProductsInCategory from "@/actions/products/get-products-in-category";
+import Filter from "./filter";
+import {
+  parseAsArrayOf,
+  parseAsBoolean,
+  parseAsInteger,
+  parseAsString,
+} from "nuqs/server";
+import MainFilters from "./main-filters";
+import Pagination from "./pagination";
+import ProductCard from "./product-card";
 
 type ProductsPageProps = {
   params: {
@@ -57,6 +65,7 @@ export default async function ProductsPage({
 
   const { name: categoryName, subcategories } = categoryResponse.data;
   const path = pathResponse.data;
+
   const filters = filtersResponse.data;
 
   const myPassedFilters = Object.keys(searchParams).reduce((acc, key) => {
@@ -66,18 +75,29 @@ export default async function ProductsPage({
       } else if (typeof searchParams[key] === "string") {
         acc[key] = [searchParams[key] as string];
       }
+      acc[key] = parseAsArrayOf(parseAsString)
+        .withDefault([])
+        .parseServerSide(acc[key]);
     }
     return acc;
   }, {} as Record<string, string[]>);
 
   const productsResponse = await getProductsInCategory(
     categoryId,
-    myPassedFilters
+    parseAsBoolean.withDefault(false).parseServerSide(searchParams.hasDiscount),
+    myPassedFilters,
+    parseAsInteger.parseServerSide(searchParams.fromPrice),
+    parseAsInteger.parseServerSide(searchParams.toPrice),
+    Math.max(
+      1,
+      parseAsInteger.withDefault(1).parseServerSide(searchParams.page)
+    )
   );
   if (!productsResponse.success) {
     notFound();
   }
-  const products = productsResponse.data;
+
+  const { numberOfPages, products } = productsResponse.data;
 
   return (
     <div className="container">
@@ -100,13 +120,18 @@ export default async function ProductsPage({
           </ul>
           <Accordion
             type="multiple"
-            defaultValue={filters.map((filter) => filter.name)}
+            defaultValue={[
+              ...filters.map((filter) => filter.name),
+              "priceFilter",
+              "discounts",
+            ]}
           >
+            <MainFilters />
             {filters.map((filter) => (
               <AccordionItem key={filter.id} value={filter.name}>
                 <AccordionTrigger>{filter.name}</AccordionTrigger>
                 <AccordionContent className="space-y-2">
-                  <Filters filters={filter} />
+                  <Filter filter={filter} />
                 </AccordionContent>
               </AccordionItem>
             ))}
@@ -137,15 +162,17 @@ export default async function ProductsPage({
           </Breadcrumb>
           <div className="pt-5">
             <h1 className="text-3xl font-bold">{categoryName}</h1>
-            <div className="grid grid-cols-3 gap-4">
-              {products.map((product) => (
-                <div key={product.id}>
-                  <div>{product.title}</div>
-                  <div>{product.price}</div>
-                  {JSON.stringify(product.attributes, null, 2)}
-                </div>
-              ))}
-            </div>
+            {products.length === 0 && (
+              <p className="text-gray-600 mt-5">No products found</p>
+            )}
+            {products.length > 0 && (
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 py-5">
+                {products.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            )}
+            <Pagination numberOfPages={numberOfPages} />
           </div>
         </div>
       </div>
