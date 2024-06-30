@@ -1,9 +1,6 @@
 import { getAllAttributesAndNumberOfProductsInCategory } from "../attributes/get-all-attibutes-and-number-of-products-in-category";
-import { cache } from "react";
 
-export default cache(getFiltersOfCategory);
-
-async function getFiltersOfCategory(categoryId: number): Promise<
+export default async function getFiltersOfCategory(categoryId: number): Promise<
   ServiceResponse<
     {
       id: number;
@@ -12,11 +9,6 @@ async function getFiltersOfCategory(categoryId: number): Promise<
     }[]
   >
 > {
-  // const cachedResponse = getCache(getCacheKey(categoryId));
-  // if (cachedResponse) {
-  //   return cachedResponse;
-  // }
-
   try {
     const response = await getAllAttributesAndNumberOfProductsInCategory(
       categoryId

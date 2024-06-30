@@ -1,10 +1,6 @@
-import { cache } from "react";
 import { getAllAttributesAndNumberOfProductsByQuery } from "../attributes/get-all-attibutes-and-number-of-products-by-query";
-import { getAllAttributesAndNumberOfProductsInCategory } from "../attributes/get-all-attibutes-and-number-of-products-in-category";
 
-export default cache(getFiltersByQuery);
-
-async function getFiltersByQuery(query: string): Promise<
+export default async function getFiltersByQuery(query: string): Promise<
   ServiceResponse<
     {
       id: number;
