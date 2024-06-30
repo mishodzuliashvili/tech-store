@@ -1,11 +1,26 @@
+"use client";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
+
 type SearchBoxProps = {};
 
 export default function SearchBox({}: SearchBoxProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const q = searchParams.get("q");
   return (
-    <form className="w-[80%] relative">
-      <div className="relative w-full">
+    <form
+      onSubmit={(e: any) => {
+        e.preventDefault();
+        if (e.target.search.value.trim() === "") return;
+        router.push(`/search?q=${e.target.search.value}`);
+      }}
+      className="w-full relative"
+    >
+      <div className="relative w-full cursor-text">
         <input
+          defaultValue={q || ""}
           type="search"
+          name="search"
           className="block py-2.5 px-4 w-full z-20 placeholder-primary text-sm rounded-xl bg-primary-100"
           placeholder="Search tech..."
           required
