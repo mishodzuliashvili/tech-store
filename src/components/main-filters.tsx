@@ -1,6 +1,10 @@
 "use client";
 
-import { AccordionContent, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -27,7 +31,7 @@ export default function MainFilters({}: MainFiltersProps) {
     };
 
   return (
-    <>
+    <Accordion type="multiple" defaultValue={["priceFilter", "discounts"]}>
       <AccordionItem value={"discounts"}>
         <AccordionTrigger>Discounts</AccordionTrigger>
         <AccordionContent className="grid grid-cols-[60px,60px,auto] gap-3">
@@ -69,6 +73,6 @@ export default function MainFilters({}: MainFiltersProps) {
           </Button>
         </AccordionContent>
       </AccordionItem>
-    </>
+    </Accordion>
   );
 }

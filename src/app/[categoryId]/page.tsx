@@ -21,16 +21,16 @@ import getCategory from "@/actions/categories/get-category";
 import getPathToRootByCategoryId from "@/actions/categories/get-path-to-root";
 import getFiltersOfCategory from "@/actions/filters/get-filters-in-category";
 import getProductsInCategory from "@/actions/products/get-products-in-category";
-import Filter from "./filter";
+import Filter from "../../components/filter";
 import {
   parseAsArrayOf,
   parseAsBoolean,
   parseAsInteger,
   parseAsString,
 } from "nuqs/server";
-import MainFilters from "./main-filters";
-import Pagination from "./pagination";
-import ProductCard from "./product-card";
+import MainFilters from "../../components/main-filters";
+import Pagination from "../../components/pagination";
+import ProductCard from "../../components/product-card";
 
 type ProductsPageProps = {
   params: {
@@ -118,15 +118,11 @@ export default async function ProductsPage({
               </li>
             ))}
           </ul>
+          <MainFilters />
           <Accordion
             type="multiple"
-            defaultValue={[
-              ...filters.map((filter) => filter.name),
-              "priceFilter",
-              "discounts",
-            ]}
+            defaultValue={[...filters.map((filter) => filter.name)]}
           >
-            <MainFilters />
             {filters.map((filter) => (
               <AccordionItem key={filter.id} value={filter.name}>
                 <AccordionTrigger>{filter.name}</AccordionTrigger>

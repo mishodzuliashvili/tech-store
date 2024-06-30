@@ -13,7 +13,7 @@ import {
 import { Prisma } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 
-export function NavigationMenuDemo({
+export function CategoryMenu({
   categoryTree,
 }: {
   categoryTree: Prisma.CategoryGetPayload<{

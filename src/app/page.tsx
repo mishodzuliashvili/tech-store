@@ -1,12 +1,7 @@
-import getCurrentUser from "@/actions/users/get-current-user";
-import { NavigationMenuDemo } from "./NavigationMenuDemo";
-import LogoutButton from "@/components/ui/logout-button";
 import getThreeLevelCategoryTree from "@/actions/categories/get-three-level-category-tree";
-import LoginWithGoogleButton from "@/components/ui/login-with-google-button";
+import { CategoryMenu } from "./category-menu";
 
 export default async function Home() {
-  const response = await getCurrentUser();
-
   const threeLevelCategoryTreeResponse = await getThreeLevelCategoryTree();
 
   if (!threeLevelCategoryTreeResponse.success) {
@@ -15,7 +10,7 @@ export default async function Home() {
 
   return (
     <main className="container">
-      <NavigationMenuDemo categoryTree={threeLevelCategoryTreeResponse.data} />
+      <CategoryMenu categoryTree={threeLevelCategoryTreeResponse.data} />
     </main>
   );
 }

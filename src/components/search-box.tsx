@@ -12,7 +12,7 @@ export default function SearchBox({}: SearchBoxProps) {
       onSubmit={(e: any) => {
         e.preventDefault();
         if (e.target.search.value.trim() === "") return;
-        router.push(`/search?q=${e.target.search.value}`);
+        router.replace(`/search?q=${e.target.search.value}`);
       }}
       className="w-full relative"
     >

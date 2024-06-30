@@ -7,7 +7,15 @@ import {
   parseAsInteger,
   parseAsString,
 } from "nuqs/server";
-import ProductCard from "../[categoryId]/product-card";
+import ProductCard from "../../components/product-card";
+import MainFilters from "../../components/main-filters";
+import Filter from "@/components/filter";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 type SearchPageProps = {
   params: {};
@@ -21,7 +29,9 @@ export default async function SearchPage({
   const query = parseAsString.parseServerSide(searchParams.q);
 
   if (!query) {
-    notFound();
+    return (
+      <main className="container text-xl font-bold">No query provided</main>
+    );
   }
 
   const filtersResponse = await getFiltersByQuery(query);
@@ -67,10 +77,28 @@ export default async function SearchPage({
       <h1>Search</h1>
       <p>Results for {query}</p>
       <p>Filters: {JSON.stringify(filters)}</p>
-      <div className="grid grid-cols-4 gap-5 mt-10">
-        {productsResponse.data.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+      <div className="grid grid-cols-[240px,1fr] gap-5">
+        <div>
+          <MainFilters />
+          <Accordion
+            type="multiple"
+            defaultValue={[...filters.map((filter) => filter.name)]}
+          >
+            {filters.map((filter) => (
+              <AccordionItem key={filter.id} value={filter.name}>
+                <AccordionTrigger>{filter.name}</AccordionTrigger>
+                <AccordionContent className="space-y-2">
+                  <Filter filter={filter} />
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+        <div className="grid grid-cols-4 gap-5 mt-10">
+          {productsResponse.data.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
       </div>
     </div>
   );
