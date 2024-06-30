@@ -1,6 +1,9 @@
 import { getAllAttributesAndNumberOfProductsInCategory } from "../attributes/get-all-attibutes-and-number-of-products-in-category";
+import { cache } from "react";
 
-export async function getFiltersOfCategory(categoryId: number): Promise<
+export default cache(getFiltersOfCategory);
+
+async function getFiltersOfCategory(categoryId: number): Promise<
   ServiceResponse<
     {
       id: number;
@@ -9,6 +12,11 @@ export async function getFiltersOfCategory(categoryId: number): Promise<
     }[]
   >
 > {
+  // const cachedResponse = getCache(getCacheKey(categoryId));
+  // if (cachedResponse) {
+  //   return cachedResponse;
+  // }
+
   try {
     const response = await getAllAttributesAndNumberOfProductsInCategory(
       categoryId
@@ -51,11 +59,15 @@ export async function getFiltersOfCategory(categoryId: number): Promise<
       };
     });
 
-    return {
+    const result = {
       data: filters,
       message: "Filters found",
       success: true,
     };
+
+    // setCache(getCacheKey(categoryId), result);
+
+    return result;
   } catch (error) {
     return {
       success: false,

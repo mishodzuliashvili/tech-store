@@ -7,10 +7,13 @@ import FONT from "@/constants/font";
 import Providers from "./providers";
 import { cn } from "@/utils/cn";
 import { Toaster } from "react-hot-toast";
+
 export const metadata: Metadata = {
   title: COMPANY.title,
   description: COMPANY.description,
 };
+
+export const revalidate = 3600;
 
 export default function RootLayout({
   children,

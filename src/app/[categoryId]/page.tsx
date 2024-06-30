@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/accordion";
 import getCategory from "@/actions/categories/get-category";
 import getPathToRootByCategoryId from "@/actions/categories/get-path-to-root";
-import { getFiltersOfCategory } from "@/actions/filters/get-filters-in-category";
+import getFiltersOfCategory from "@/actions/filters/get-filters-in-category";
 import getProductsInCategory from "@/actions/products/get-products-in-category";
 import Filter from "./filter";
 import {
