@@ -1,7 +1,7 @@
 import db from "@/lib/db";
 import getAllSubtreeCategoryIds from "../categories/get-all-subtree-category-ids";
 import { Prisma } from "@prisma/client";
-import PRODUCTS_PAGE from "@/constants/products-page";
+import PRODUCTS_PAGE, { SortOption } from "@/constants/products-page";
 
 export default async function getProductsInCategory(
   categoryId: number,
@@ -9,7 +9,8 @@ export default async function getProductsInCategory(
   filters?: Record<string, string[]>,
   priceFrom?: number | null,
   priceTo?: number | null,
-  page?: number | null
+  page?: number | null,
+  sort?: SortOption | null
 ): Promise<
   ServiceResponse<{
     products: Prisma.ProductGetPayload<{
@@ -71,6 +72,28 @@ export default async function getProductsInCategory(
       ...(page && {
         skip: (page - 1) * PRODUCTS_PAGE.pageSize,
       }),
+      orderBy: (() => {
+        switch (sort) {
+          case "price-asc":
+            return {
+              price: "asc",
+            };
+          case "price-desc":
+            return {
+              price: "desc",
+            };
+          case "discount-desc":
+            return {
+              discount: "desc",
+            };
+          case "newest":
+            return {
+              createdAt: "desc",
+            };
+          default:
+            return { createdAt: "desc" };
+        }
+      })(),
       take: PRODUCTS_PAGE.pageSize,
       include: {
         attributes: true,
