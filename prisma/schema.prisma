@@ -45,6 +45,8 @@ model Product {
   isActive    Boolean @default(true)
 
   attributes ProductAttribute[]
+
+  createdAt DateTime @default(now())
 }
 
 model ProductAttribute {
