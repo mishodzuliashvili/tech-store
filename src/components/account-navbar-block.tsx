@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { SlLogin } from "react-icons/sl";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 type AccountNavbarBlockProps = {};
@@ -35,7 +34,7 @@ export default function AccountNavbarBlock({}: AccountNavbarBlockProps) {
             <FiUser size={22} />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
+        <DropdownMenuContent align="end">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <Link href={`/profile`}>
