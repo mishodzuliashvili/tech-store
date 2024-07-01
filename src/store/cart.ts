@@ -18,6 +18,7 @@ type CartStore = {
   count: () => number;
   add: (product: Product) => void;
   remove: (idProduct: number) => void;
+  removeAtOnce: (idProduct: number) => void;
   removeAll: () => void;
 };
 
@@ -57,6 +58,12 @@ export const useCartStore = create<CartStore>((set, get) => ({
   removeAll: () => {
     set({ cart: [] });
     saveCartToLocalStorage([]);
+  },
+  removeAtOnce: (idProduct: number) => {
+    const { cart } = get();
+    const updatedCart = cart.filter((item) => item.id !== idProduct);
+    set({ cart: updatedCart });
+    saveCartToLocalStorage(updatedCart);
   },
 }));
 
