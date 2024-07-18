@@ -1,10 +1,7 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useTransition } from "react";
 import { useQueryState, parseAsArrayOf, parseAsString } from "nuqs";
-import { useDebounce } from "use-debounce";
 
 type FilterProps = {
   filter: {

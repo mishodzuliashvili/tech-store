@@ -11,14 +11,19 @@ import { Input } from "@/components/ui/input";
 import { AccordionItem } from "@radix-ui/react-accordion";
 import { useQueryState, parseAsInteger, parseAsBoolean } from "nuqs";
 
-type MainFiltersProps = {};
+type MainFiltersProps = {
+  startTransition?: React.TransitionStartFunction;
+};
 
-export default function MainFilters({}: MainFiltersProps) {
+export default function MainFilters({ startTransition }: MainFiltersProps) {
   const [fromPrice, setFromPrice] = useQueryState("fromPrice", parseAsInteger);
   const [toPrice, setToPrice] = useQueryState("toPrice", parseAsInteger);
   const [hasDiscount, setHasDiscount] = useQueryState(
     "hasDiscount",
-    parseAsBoolean.withDefault(false)
+    parseAsBoolean.withDefault(false).withOptions({
+      shallow: false,
+      startTransition,
+    })
   );
   const handlePriceChange =
     (setter: (value: number | null) => void) => (e: any) => {
@@ -39,9 +44,7 @@ export default function MainFilters({}: MainFiltersProps) {
             <Checkbox
               checked={hasDiscount}
               onCheckedChange={(checked: boolean) => {
-                setHasDiscount(checked, {
-                  shallow: false,
-                });
+                setHasDiscount(checked);
               }}
             />
             <div className="whitespace-nowrap">With Discount</div>
