@@ -20,6 +20,7 @@ export default async function getProductsInCategory(
       };
     }>[];
     numberOfPages: number;
+    totalProducts: number;
   }>
 > {
   try {
@@ -138,8 +139,9 @@ export default async function getProductsInCategory(
     });
 
     const numberOfPages = Math.ceil(totalProducts / PRODUCTS_PAGE.pageSize);
+
     return {
-      data: { products, numberOfPages },
+      data: { products, numberOfPages, totalProducts },
       message: "Products found",
       success: true,
     };

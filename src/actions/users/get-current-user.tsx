@@ -1,14 +1,15 @@
-"use server";
+// "use server";
 import db from "@/lib/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { User } from "@prisma/client";
+import { cache } from "react";
 
 const notFoundResponse = {
   success: false,
   message: "User not found",
 } as const;
 
-export default async function getCurrentUser(): Promise<ServiceResponse<User>> {
+async function getCurrentUser(): Promise<ServiceResponse<User>> {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -31,3 +32,5 @@ export default async function getCurrentUser(): Promise<ServiceResponse<User>> {
     return notFoundResponse;
   }
 }
+
+export default cache(getCurrentUser);

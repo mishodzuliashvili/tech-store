@@ -19,6 +19,7 @@ export default async function getProductsByQuery(
       };
     }>[];
     numberOfPages: number;
+    totalProducts: number;
   }>
 > {
   const products = await db.product.findMany({
@@ -129,7 +130,7 @@ export default async function getProductsByQuery(
 
   try {
     return {
-      data: { products, numberOfPages },
+      data: { products, numberOfPages, totalProducts },
       message: "Products found",
       success: true,
     };

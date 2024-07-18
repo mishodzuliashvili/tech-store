@@ -9,10 +9,12 @@ datasource db {
 }
 
 model User {
-  id         String @id @default(cuid())
-  email      String @unique
-  givenName  String
-  familyName String
+  id          String        @id @default(cuid())
+  email       String        @unique
+  givenName   String
+  familyName  String
+  role        String        @default("CUSTOMER") // Can be either "CUSTOMER" or "ADMIN"
+  UserPayment UserPayment[]
 }
 
 model Category {
@@ -46,7 +48,8 @@ model Product {
 
   attributes ProductAttribute[]
 
-  createdAt DateTime @default(now())
+  createdAt     DateTime        @default(now())
+  PaymentDetail PaymentDetail[]
 }
 
 model ProductAttribute {
@@ -57,4 +60,26 @@ model ProductAttribute {
   productId Int
 
   @@unique([productId, name])
+}
+
+model UserPayment {
+  id      Int    @id @default(autoincrement())
+  user    User   @relation(fields: [userId], references: [id])
+  userId  String
+  amount  Float
+  orderID String
+
+  createdAt DateTime @default(now())
+
+  paymentDetails PaymentDetail[]
+}
+
+model PaymentDetail {
+  id            Int         @id @default(autoincrement())
+  userPayment   UserPayment @relation(fields: [userPaymentId], references: [id])
+  userPaymentId Int
+  product       Product     @relation(fields: [productId], references: [id])
+  productId     Int
+  quantity      Int
+  price         Float
 }
