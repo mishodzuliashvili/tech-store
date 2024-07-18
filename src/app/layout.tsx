@@ -1,40 +1,47 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import COMPANY from "@/constants/company";
-import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
+import "@/styles/globals.css";
+import { Navbar, Footer } from "@/components/common";
 import FONT from "@/constants/font";
-import Providers from "./providers";
 import { cn } from "@/utils/cn";
 import { Toaster } from "react-hot-toast";
+import { ROOT_METADATA } from "@/constants/root-metadata";
+import "@mantine/core/styles.css";
+import "@mantine/charts/styles.css";
 
-export const metadata: Metadata = {
-  title: COMPANY.title,
-  description: COMPANY.description,
-};
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
+import getCurrentUser from "@/actions/users/get-current-user";
 
-export const revalidate = 3600;
+export const metadata: Metadata = ROOT_METADATA;
 
-export default function RootLayout({
+export const dynamic = "force-dynamic";
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const userRes = await getCurrentUser();
+
   return (
     <html lang="en">
-      <Providers>
-        <body
-          className={cn(
-            "min-h-screen bg-background font-sans antialiased grid grid-rows-[auto,1fr,auto]",
-            FONT.variable
-          )}
-        >
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
+      <head>
+        <ColorSchemeScript />
+      </head>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased grid grid-rows-[auto,1fr,auto]"
+          // FONT.variable
+        )}
+      >
+        <Navbar
+          isUserAdmin={userRes.success && userRes.data.role === "ADMIN"}
+        />
+        <main>
+          <MantineProvider>{children}</MantineProvider>
           <Toaster />
-        </body>
-      </Providers>
+        </main>
+        <Footer />
+      </body>
     </html>
   );
 }
