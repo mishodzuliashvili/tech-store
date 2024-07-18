@@ -29,8 +29,8 @@ export default async function RootLayout({
       </head>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased grid grid-rows-[auto,1fr,auto]"
-          // FONT.variable
+          "min-h-screen bg-background font-sans antialiased grid grid-rows-[auto,1fr,auto]",
+          FONT.variable
         )}
       >
         <Navbar
