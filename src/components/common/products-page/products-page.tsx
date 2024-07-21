@@ -48,7 +48,7 @@ export function ProductsPage({
           categoryName={categoryName}
           subcategories={subcategories}
           parentCategoryId={
-            path && path.length > 1 ? path[path.length - 2].id.toString() : ""
+            path && path.length > 1 ? path[path.length - 2].id.toString() : null
           }
           filters={filters}
           startTransition={startTransition}

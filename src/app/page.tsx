@@ -296,7 +296,7 @@ export default async function Home() {
         products={discountedProducts}
       />
       <ProductsCarousel title="News" products={newProducts} />
-      <ProductsCarousel title="Notebooks" products={notebooks} />
+      {/* <ProductsCarousel title="Notebooks" products={notebooks} /> */}
     </main>
   );
 }

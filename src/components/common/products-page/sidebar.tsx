@@ -11,7 +11,7 @@ import Filter from "@/components/filter";
 
 type SidebarProps = {
   categoryName?: string;
-  parentCategoryId: string;
+  parentCategoryId: string | null;
   subcategories?: {
     id: number;
     name: string;
@@ -36,7 +36,7 @@ export function Sidebar({
     <div>
       {categoryName && (
         <Link
-          href={`/category/${parentCategoryId}`}
+          href={parentCategoryId ? `/category/${parentCategoryId}` : "/"}
           className="font-bold text-lg grid grid-cols-[20px_1fr] items-start justify-start gap-2"
         >
           <IoIosArrowBack className="text-xl relative" />

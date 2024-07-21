@@ -171,7 +171,7 @@ export default function CartPage({ params, searchParams }: CartPageProps) {
               }}
             />
             {cart.length === 0 && (
-              <h3 className="mt-3 text-center">Your products to purchase</h3>
+              <h3 className="mt-3 text-center">Add products to purchase</h3>
             )}
             {cart.length > 0 && !isLoading && !isAuthenticated && (
               <h3 className="mt-3 text-center">
